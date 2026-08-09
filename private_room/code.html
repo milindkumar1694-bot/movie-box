@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Private Room - The Last Frame</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#99907c",
+                        "tertiary-container": "#97b0ff",
+                        "primary": "#f2ca50",
+                        "surface-container-lowest": "#110e07",
+                        "on-surface": "#eae1d4",
+                        "on-secondary-fixed-variant": "#454745",
+                        "on-secondary-container": "#b8b9b5",
+                        "surface-dim": "#16130b",
+                        "inverse-surface": "#eae1d4",
+                        "on-tertiary": "#082b72",
+                        "background": "#16130b",
+                        "tertiary": "#bfcdff",
+                        "on-background": "#eae1d4",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#254188",
+                        "surface-bright": "#3d392f",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#343027",
+                        "tertiary-fixed": "#dbe1ff",
+                        "outline-variant": "#4d4635",
+                        "on-secondary-fixed": "#1a1c1a",
+                        "primary-fixed": "#ffe088",
+                        "on-surface-variant": "#d0c5af",
+                        "tertiary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#2d2a21",
+                        "on-primary-container": "#554300",
+                        "on-primary": "#3c2f00",
+                        "surface": "#16130b",
+                        "on-tertiary-fixed-variant": "#27438a",
+                        "inverse-primary": "#735c00",
+                        "secondary-fixed": "#e2e3df",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface-container": "#231f17",
+                        "primary-container": "#d4af37",
+                        "on-tertiary-fixed": "#00174b",
+                        "secondary-container": "#484947",
+                        "surface-variant": "#38342b",
+                        "secondary-fixed-dim": "#c6c7c3",
+                        "on-secondary": "#2f312e",
+                        "surface-container-highest": "#38342b",
+                        "on-primary-fixed-variant": "#574500",
+                        "surface-container-low": "#1f1b13",
+                        "surface-tint": "#e9c349",
+                        "on-primary-fixed": "#241a00",
+                        "secondary": "#c6c7c3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "xl": "40px",
+                        "xxl": "64px",
+                        "lg": "24px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-md": ["Inter"],
+                        "metadata": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "metadata": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-sm-mobile": ["20px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Hide standard scrollbar for a seamless cinematic feel */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary/20">
+<!-- Task-Focused Header: Suppresses global nav for immersive room experience -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-gutter h-20 bg-background/80 backdrop-blur-xl border-b border-surface-variant/30 transition-all">
+<!-- Close/Back Action -->
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">close</span>
+</button>
+<!-- Room Identity -->
+<div class="flex flex-col items-center justify-center">
+<h1 class="font-headline-sm-mobile md:font-headline-sm text-headline-sm-mobile md:text-headline-sm text-on-surface font-semibold tracking-tight">The Last Frame</h1>
+<div class="flex items-center gap-1.5 mt-0.5">
+<!-- Active Indicator -->
+<div class="relative flex h-2 w-2 items-center justify-center">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-40"></span>
+<span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary shadow-[0_0_8px_rgba(242,202,80,0.8)]"></span>
+</div>
+<span class="font-metadata text-metadata text-primary uppercase tracking-wider">Active</span>
+</div>
+</div>
+<!-- Room Options -->
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">more_horiz</span>
+</button>
+</header>
+<!-- Communication Area Canvas -->
+<!-- Uses expansive spacing and tonal shifts instead of traditional chat bubbles -->
+<main class="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-gutter pt-28 pb-36 flex flex-col justify-end gap-8">
+<!-- Date Divider (Ambient detail) -->
+<div class="flex justify-center w-full mb-4">
+<span class="font-metadata text-metadata text-on-surface-variant/40 uppercase tracking-widest px-4 py-1 rounded-full border border-surface-variant/20 bg-surface/50 backdrop-blur-sm">Today</span>
+</div>
+<!-- Message: User 1 (Left Aligned, Muted Tone) -->
+<div class="flex flex-col items-start max-w-[85%] md:max-w-[70%] group">
+<div class="px-6 py-4 rounded-[24px] bg-surface-container-low text-on-surface-variant font-body-lg text-body-lg leading-relaxed border border-transparent shadow-sm">
+                Hey
+            </div>
+<div class="flex items-center gap-2 mt-2 ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="font-metadata text-metadata text-on-surface-variant/50">10:42 PM</span>
+</div>
+</div>
+<!-- Message: User 2 (Right Aligned, Warm/Prominent Tone) -->
+<div class="flex flex-col items-end max-w-[85%] md:max-w-[70%] self-end group">
+<div class="px-6 py-4 rounded-[24px] bg-surface-container-highest text-on-surface font-body-lg text-body-lg leading-relaxed border border-surface-variant/30 shadow-md">
+                hii :)
+            </div>
+<div class="flex items-center gap-2 mt-2 mr-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="font-metadata text-metadata text-on-surface-variant/50">10:45 PM</span>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'wght' 300;">done_all</span>
+</div>
+</div>
+<!-- Message: User 1 (Left Aligned) -->
+<div class="flex flex-col items-start max-w-[85%] md:max-w-[70%] group">
+<div class="px-6 py-4 rounded-[24px] bg-surface-container-low text-on-surface-variant font-body-lg text-body-lg leading-relaxed border border-transparent shadow-sm">
+                What are you doing?
+            </div>
+<div class="flex items-center gap-2 mt-2 ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="font-metadata text-metadata text-on-surface-variant/50">10:46 PM</span>
+</div>
+</div>
+<!-- Message: User 2 - Cinematic Image Share (Uploading State) -->
+<div class="flex flex-col items-end max-w-[90%] sm:max-w-[75%] md:max-w-[65%] self-end mt-2">
+<div class="relative rounded-[24px] overflow-hidden group shadow-2xl border border-surface-variant/40 bg-surface-container">
+<!-- Shared Photo Placeholder -->
+<img class="w-full aspect-[4/5] object-cover opacity-80 mix-blend-luminosity transition-all duration-700" data-alt="A cinematic, moody photograph of a dimly lit, high-end private screening room. Rich dark charcoal velvet walls, a single beam of warm golden light illuminating a vintage leather armchair. Deep shadows, highly atmospheric, reminiscent of a film noir set." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6oUiMCeTOmjiiCg0g6Dqs3NSS-ZSLhySo5okUFIHtQ5DGI80t7zcp41OB9olJ0X7Y4tIVOVN547zEWa0rFkKOrK2Wl4WV442IrHHxNgvWi266ZZawfhOZN_6PrHJNzSlL488A5dJA3Ks4w1JSpERLT4T8APcICkmmQ3tpZFA2PXoChtJhzzWcWR2Q0-eEV2Xf_vyoOOg7JyddYRWKOXbCnWe41h_0VeBNdWBihhqvNLQH7ZtU8EmoIw"/>
+<!-- Depth/Tonal Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent pointer-events-none"></div>
+<!-- Subtle Uploading State -->
+<div class="absolute inset-0 bg-background/40 backdrop-blur-sm flex flex-col items-center justify-center pointer-events-none p-6 text-center">
+<div class="w-12 h-12 rounded-full border-2 border-surface-variant flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-surface-variant animate-pulse" style="font-variation-settings: 'wght' 300;">cloud_upload</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full max-w-[160px] h-1.5 bg-surface-variant/50 rounded-full overflow-hidden mt-2 backdrop-blur-md">
+<div class="h-full bg-primary w-[65%] rounded-full relative transition-all duration-500 ease-out">
+<div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-white/30 rounded-r-full"></div>
+</div>
+</div>
+<span class="font-metadata text-metadata text-on-surface mt-3 tracking-widest uppercase">Uploading...</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Composer Area -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-background/80 backdrop-blur-2xl border-t border-surface-variant/20 pb-safe pt-2">
+<div class="max-w-3xl mx-auto w-full px-4 md:px-gutter py-2 md:py-4">
+<!-- Elegant Input Pill -->
+<div class="flex items-end gap-2 bg-surface-container/80 backdrop-blur-md rounded-[24px] p-1.5 pr-2 border border-surface-variant/30 shadow-lg focus-within:border-primary/40 focus-within:bg-surface-container transition-all duration-300">
+<!-- Attachment Action -->
+<button aria-label="Attach Image" class="p-3.5 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-variant/50 flex-shrink-0 self-end">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'wght' 300;">add_photo_alternate</span>
+</button>
+<!-- Text Input -->
+<textarea class="flex-1 bg-transparent border-none text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant/40 focus:ring-0 resize-none py-4 min-h-[52px] max-h-[140px]" placeholder="Write something..." rows="1"></textarea>
+<!-- Send Action (Primary Highlight) -->
+<button aria-label="Send Message" class="p-3.5 text-background bg-primary/90 hover:bg-primary rounded-full transition-all flex-shrink-0 self-end shadow-[0_0_15px_rgba(242,202,80,0.15)] hover:shadow-[0_0_20px_rgba(242,202,80,0.3)] group hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 text-[20px]" style="font-variation-settings: 'wght' 600, 'FILL' 1;">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+        // Simple script to auto-resize textarea based on content
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            if(this.value === '') {
+                this.style.height = 'auto';
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Playback Ready</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#99907c",
+                        "tertiary-container": "#97b0ff",
+                        "primary": "#f2ca50",
+                        "surface-container-lowest": "#110e07",
+                        "on-surface": "#eae1d4",
+                        "on-secondary-fixed-variant": "#454745",
+                        "on-secondary-container": "#b8b9b5",
+                        "surface-dim": "#16130b",
+                        "inverse-surface": "#eae1d4",
+                        "on-tertiary": "#082b72",
+                        "background": "#16130b",
+                        "tertiary": "#bfcdff",
+                        "on-background": "#eae1d4",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#254188",
+                        "surface-bright": "#3d392f",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#343027",
+                        "tertiary-fixed": "#dbe1ff",
+                        "outline-variant": "#4d4635",
+                        "on-secondary-fixed": "#1a1c1a",
+                        "primary-fixed": "#ffe088",
+                        "on-surface-variant": "#d0c5af",
+                        "tertiary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#2d2a21",
+                        "on-primary-container": "#554300",
+                        "on-primary": "#3c2f00",
+                        "surface": "#16130b",
+                        "on-tertiary-fixed-variant": "#27438a",
+                        "inverse-primary": "#735c00",
+                        "secondary-fixed": "#e2e3df",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface-container": "#231f17",
+                        "primary-container": "#d4af37",
+                        "on-tertiary-fixed": "#00174b",
+                        "secondary-container": "#484947",
+                        "surface-variant": "#38342b",
+                        "secondary-fixed-dim": "#c6c7c3",
+                        "on-secondary": "#2f312e",
+                        "surface-container-highest": "#38342b",
+                        "on-primary-fixed-variant": "#574500",
+                        "surface-container-low": "#1f1b13",
+                        "surface-tint": "#e9c349",
+                        "on-primary-fixed": "#241a00",
+                        "secondary": "#c6c7c3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "xl": "40px",
+                        "xxl": "64px",
+                        "lg": "24px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-md": ["Inter"],
+                        "metadata": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "metadata": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-sm-mobile": ["20px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom Animations for Cinematic Loading State */
+        @keyframes subtleSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes etherealPulse {
+            0%, 100% { 
+                opacity: 0.4; 
+                transform: scale(0.95); 
+                box-shadow: 0 0 20px rgba(242, 202, 80, 0.1); 
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1.05); 
+                box-shadow: 0 0 50px rgba(242, 202, 80, 0.4); 
+            }
+        }
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-ring-outer {
+            animation: subtleSpin 8s linear infinite;
+        }
+        .anim-ring-inner {
+            animation: subtleSpin 4s linear infinite reverse;
+        }
+        .anim-core-glow {
+            animation: etherealPulse 3s ease-in-out infinite;
+        }
+        .reveal-content {
+            animation: fadeInSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background h-screen w-screen overflow-hidden relative selection:bg-primary/30">
+<!-- Note: TopAppBar, BottomNavBar, and NavigationDrawer are intentionally suppressed here. 
+         This is a transient/transactional "Playback Ready" screen, requiring full user focus 
+         on the primary action, per the Semantic Shell Mandate (Automatic Suppression rule). -->
+<!-- Blurred Background Layer -->
+<div class="absolute inset-0 z-0 scale-110 pointer-events-none" data-alt="A cinematic, moody still image serving as a heavily blurred background for a luxury streaming interface. The scene is extracted from a fictional high-art film titled 'The Last Frame'. It features dramatic, low-key lighting with deep shadows and soft, golden-hour highlights reflecting off a mysterious textured surface. The color palette is dominated by rich charcoal blacks, deep umber, and glowing amber accents, perfectly matching a minimalist-cinematic aesthetic. The image is severely out of focus, creating a beautiful, soft bokeh effect that adds profound depth without distracting from foreground UI elements." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDasCRNLraOkYqobbfcGRDRuh3ZZYstEGVkJf4l5252-aiS064xKutRpvfvXQKrpRHNFf_YrG1F-nyNnC8PWW4zY_JKmtTdzy2ihK5jEu7GEMbHHyPVlwGNkktdtscWwYhRvzKLpQ_w_Ryp8oloRX0NeG60o9UYn10iNNIob4mMQe5BHW0N-0f4yX6gzTETJ-YtqttKLjTTsTPC6ocT5mP61Y3n8cbqqu7WOV-aV8TXS7i_gpDU6yzAog')">
+<div class="absolute inset-0 backdrop-blur-3xl bg-surface/85"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-center h-full w-full px-gutter max-w-container-max mx-auto">
+<!-- Cinematic Loading Animation -->
+<div class="relative flex items-center justify-center mb-xxl reveal-content delay-1">
+<!-- Outer delicate ring -->
+<div class="absolute w-40 h-40 rounded-full border border-surface-variant anim-ring-outer">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary/50"></div>
+</div>
+<!-- Inner rotating dashed ring -->
+<div class="absolute w-32 h-32 rounded-full border border-dashed border-outline/30 anim-ring-inner"></div>
+<!-- Core glowing element -->
+<div class="w-20 h-20 rounded-full bg-primary/10 border border-primary/40 backdrop-blur-sm flex items-center justify-center anim-core-glow relative z-20">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">
+                    play_arrow
+                </span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="text-center mb-xxl reveal-content delay-2">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-md tracking-tight">Playback Ready</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
+                The connection is secure. Your screening of <span class="text-primary/90 italic">The Last Frame</span> is ready to begin.
+            </p>
+</div>
+<!-- Primary Action Button -->
+<div class="reveal-content delay-3">
+<!-- Using custom styles matching the brand guidelines: "Warm Off-White (#F5F5F1) background with near-black text. 12px roundedness. Bold, uppercase label." 
+                 Mapped to Tailwind config: inverse-surface (off-white) and inverse-on-surface (dark text). -->
+<button class="bg-inverse-surface text-inverse-on-surface font-label-caps text-label-caps uppercase rounded-xl px-12 py-5 tracking-widest hover:scale-105 hover:bg-surface-tint hover:text-on-primary-fixed transition-all duration-300 shadow-[0_0_40px_rgba(242,202,80,0)] hover:shadow-[0_0_40px_rgba(242,202,80,0.2)] flex items-center gap-3 group">
+                Continue to Screening
+                <span class="material-symbols-outlined text-[16px] transform group-hover:translate-x-1 transition-transform">
+                    arrow_forward
+                </span>
+</button>
+</div>
+</main>
+</body></html>

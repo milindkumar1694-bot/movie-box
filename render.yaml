@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: stitch-frame-private-room
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ROOM_ACCESS_CODE
+        generateValue: true
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false

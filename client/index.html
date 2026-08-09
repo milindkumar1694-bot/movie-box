@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Frame - Discover</title>
+<meta name="description" content="A premium cinematic media discovery experience.">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<!-- Socket.IO Client -->
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- Tailwind Config (from Stitch design system) -->
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "outline": "#99907c",
+                    "tertiary-container": "#97b0ff",
+                    "primary": "#f2ca50",
+                    "surface-container-lowest": "#110e07",
+                    "on-surface": "#eae1d4",
+                    "on-secondary-fixed-variant": "#454745",
+                    "on-secondary-container": "#b8b9b5",
+                    "surface-dim": "#16130b",
+                    "inverse-surface": "#eae1d4",
+                    "on-tertiary": "#082b72",
+                    "background": "#16130b",
+                    "tertiary": "#bfcdff",
+                    "on-background": "#eae1d4",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#254188",
+                    "surface-bright": "#3d392f",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#343027",
+                    "tertiary-fixed": "#dbe1ff",
+                    "outline-variant": "#4d4635",
+                    "on-secondary-fixed": "#1a1c1a",
+                    "primary-fixed": "#ffe088",
+                    "on-surface-variant": "#d0c5af",
+                    "tertiary-fixed-dim": "#b4c5ff",
+                    "surface-container-high": "#2d2a21",
+                    "on-primary-container": "#554300",
+                    "on-primary": "#3c2f00",
+                    "surface": "#16130b",
+                    "on-tertiary-fixed-variant": "#27438a",
+                    "inverse-primary": "#735c00",
+                    "secondary-fixed": "#e2e3df",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#e9c349",
+                    "surface-container": "#231f17",
+                    "primary-container": "#d4af37",
+                    "on-tertiary-fixed": "#00174b",
+                    "secondary-container": "#484947",
+                    "surface-variant": "#38342b",
+                    "secondary-fixed-dim": "#c6c7c3",
+                    "on-secondary": "#2f312e",
+                    "surface-container-highest": "#38342b",
+                    "on-primary-fixed-variant": "#574500",
+                    "surface-container-low": "#1f1b13",
+                    "surface-tint": "#e9c349",
+                    "on-primary-fixed": "#241a00",
+                    "secondary": "#c6c7c3"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "container-max": "1440px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "unit": "4px",
+                    "xl": "40px",
+                    "xxl": "64px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "safe": "env(safe-area-inset-bottom, 24px)"
+                },
+                "fontFamily": {
+                    "body-md": ["Inter"],
+                    "display-md": ["Inter"],
+                    "metadata": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm-mobile": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-caps": ["Inter"]
+                },
+                "fontSize": {
+                    "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                    "display-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                    "metadata": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                    "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                    "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "headline-sm-mobile": ["20px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                    "display-lg": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                    "label-caps": ["11px", { "lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "600" }]
+                }
+            },
+        },
+    }
+</script>
+
+<style>
+    /* ─── Base & Scrollbar ──────────────────────────── */
+    body { font-family: 'Inter', sans-serif; background-color: #0D0E10; }
+    html { scroll-behavior: smooth; }
+
+    .hide-scroll::-webkit-scrollbar { display: none; }
+    .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Room screen: hide scrollbar for cinematic feel */
+    #screen-room ::-webkit-scrollbar { width: 0px; background: transparent; }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); }
+
+    /* ─── Stitch Card Gradient ─────────────────────── */
+    .card-gradient {
+        background: linear-gradient(to top, rgba(13, 14, 16, 0.9) 0%, rgba(13, 14, 16, 0.4) 50%, rgba(13, 14, 16, 0) 100%);
+    }
+
+    /* ─── Material Symbols defaults ────────────────── */
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill {
+        font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* ─── Hover glow for interactive elements ──────── */
+    .glow-hover:hover {
+        box-shadow: 0 0 20px 0 rgba(242, 202, 80, 0.1);
+    }
+
+    /* ─── Playback Ready Animations ────────────────── */
+    @keyframes subtleSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    @keyframes etherealPulse {
+        0%, 100% {
+            opacity: 0.4;
+            transform: scale(0.95);
+            box-shadow: 0 0 20px rgba(242, 202, 80, 0.1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(242, 202, 80, 0.4);
+        }
+    }
+    @keyframes fadeInSlideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .anim-ring-outer { animation: subtleSpin 8s linear infinite; }
+    .anim-ring-inner { animation: subtleSpin 4s linear infinite reverse; }
+    .anim-core-glow { animation: etherealPulse 3s ease-in-out infinite; }
+    .reveal-content {
+        animation: fadeInSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        opacity: 0;
+    }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* ─── Screen Transitions ───────────────────────── */
+    .screen {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .screen.active {
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+    }
+    .screen.fade-out {
+        opacity: 0;
+    }
+
+    /* ─── Toast Notifications ──────────────────────── */
+    @keyframes toastSlideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes toastSlideOut {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-20px); opacity: 0; }
+    }
+    .toast-enter { animation: toastSlideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+    .toast-exit { animation: toastSlideOut 0.3s ease-in forwards; }
+
+    /* ─── Access Input Shake ───────────────────────── */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-6px); }
+        40% { transform: translateX(6px); }
+        60% { transform: translateX(-4px); }
+        80% { transform: translateX(4px); }
+    }
+    .shake { animation: shake 0.4s ease-in-out; }
+
+    /* ─── Connection Banner ────────────────────────── */
+    @keyframes reconnectPulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+    }
+    .reconnect-pulse { animation: reconnectPulse 1.5s ease-in-out infinite; }
+
+    /* ─── Image Lightbox ───────────────────────────── */
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(0,0,0,0.95);
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+    }
+    .lightbox.active {
+        display: flex;
+    }
+    .lightbox img {
+        max-width: 95vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+    /* ─── Image Preview (before send) ──────────────── */
+    .image-preview-bar {
+        display: none;
+    }
+    .image-preview-bar.active {
+        display: flex;
+    }
+
+    /* ─── Message fade-in ──────────────────────────── */
+    @keyframes msgFadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .msg-enter {
+        animation: msgFadeIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+</style>
+</head>
+
+<body class="text-on-background font-body-md antialiased min-h-screen bg-background">
+
+<!-- ╔══════════════════════════════════════════════════════════════╗ -->
+<!-- ║  SCREEN 1: HOME — Discovery Home (from Stitch)             ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════╝ -->
+<div id="screen-home" class="screen active min-h-screen pb-24 md:pb-0 pt-16 md:pt-24">
+
+    <!-- TopAppBar -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-xl">
+        <button class="md:hidden text-primary hover:text-primary transition-colors focus:outline-none">
+            <span class="material-symbols-outlined" data-icon="menu">menu</span>
+        </button>
+        <div class="font-display-md text-display-md text-on-surface uppercase tracking-widest absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">mm/Movies</div>
+        <nav class="hidden md:flex gap-8 absolute left-1/2 -translate-x-1/2">
+            <a class="text-primary font-bold hover:text-primary transition-colors opacity-80 scale-95 transition-all relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#">Discover</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Library</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Watchlist</a>
+        </nav>
+        <button class="text-primary hover:text-primary transition-colors focus:outline-none">
+            <span class="material-symbols-outlined" data-icon="search">search</span>
+        </button>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow w-full max-w-container-max mx-auto px-5 md:px-10 lg:px-16 flex flex-col gap-xxl pb-xxl">
+
+        <!-- Hero Section: Parallel Lines -->
+        <section class="w-full pt-8 md:pt-12">
+            <div class="relative w-full h-[65vh] md:h-[75vh] min-h-[500px] rounded-[24px] overflow-hidden group">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAi3PSXWTpIG1Y95evv66V4ZFCnZct7FE4cnMT9dZRtrmUSkD4Sn5FeAsSy7ZQL2Ea-7AMKfAZjF283aoG4o65z1sShu5V1LAfIpOu0gIGkX9O8HOsU-mG6-HgERhYdFqgSPnE3Wf-Gxct-8T-WM90oAnmsRkmxdQ9BOL8ERmxEfP3Ogad6FgLTqsYE1oBAZ6ZeLMD3fjcOTJtSVf8xBMqubxjdrJiNzi9Lir8xrnoopEgVRyxr9FJaeA')"></div>
+                <div class="absolute inset-0 card-gradient"></div>
+                <div class="absolute bottom-0 left-0 w-full p-6 md:p-12 flex flex-col gap-md z-10">
+                    <div class="flex items-center gap-sm">
+                        <span class="px-3 py-1 bg-surface-variant/40 backdrop-blur-md rounded-full font-label-caps text-label-caps text-on-surface uppercase tracking-wider">Featured Premiere</span>
+                    </div>
+                    <h1 class="font-display-lg text-display-lg md:text-[64px] text-on-background drop-shadow-lg max-w-3xl leading-tight">Parallel Lines</h1>
+                    <div class="flex items-center gap-3 font-metadata text-metadata text-on-surface-variant uppercase tracking-widest">
+                        <span>2026</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span>Drama</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span>2h 08m</span>
+                    </div>
+                    <p class="font-body-lg text-body-lg text-on-surface/90 max-w-2xl mt-2 line-clamp-3 md:line-clamp-none">
+                        When a fragmented memory surfaces, an aging detective and a disillusioned journalist find their lives intersecting across two distinct timelines. A visually arresting exploration of fate, choice, and the echoes of the past.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 mt-6">
+                        <button class="bg-[#F5F5F1] text-surface-lowest px-8 py-4 rounded-[12px] font-label-caps text-label-caps uppercase tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            View Details
+                        </button>
+                        <button class="bg-transparent border border-[#8E8E93] text-on-surface px-8 py-4 rounded-[12px] font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant/30 transition-all duration-300 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Picks Shelf -->
+        <section class="w-full flex flex-col gap-6">
+            <div class="flex justify-between items-end px-2">
+                <h2 class="font-headline-sm text-headline-sm md:text-[28px] text-on-background tracking-tight">Trending Picks</h2>
+                <div class="flex gap-2">
+                    <button aria-label="Previous" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors focus:outline-none">
+                        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                    </button>
+                    <button aria-label="Next" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors focus:outline-none">
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-6 overflow-x-auto hide-scroll pb-8 pt-2 -mx-5 px-5 md:-mx-10 md:px-10 lg:-mx-16 lg:px-16 snap-x snap-mandatory">
+                <!-- Card 1: After Midnight -->
+                <div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+                    <div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBU20DOsTQjp3EEtGdyOZf12eT2Aac7nH2DRCv_6a6WFE9DqHc2jrW1SZECLqTU8Hud7Kc8LHPKShH1RKP7OTWnGiQPRFfygG4OrbFoi6sQUTfrJ0mZtrVbPYQ4a_MabhfHdB8EhWMIFEPvCHOmdVbhXKHa3XGV4EmCZ-vwkF7z2XNr-yf-Qd5qR4cLUk-mvCmf7DDHBtSHHqnmd2MZaf_w7y5iR3lyQwuii_2mCa76biH6qS1hT_l7Rw')"></div>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex flex-col gap-1 px-2">
+                        <h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">After Midnight</h3>
+                        <div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+                            <span>2025</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span>Thriller</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2: The Last Frame (CLICKABLE — gateway to access screen) -->
+                <div id="card-the-last-frame" class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer" onclick="window.App?.navigateTo('access')">
+                    <div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDG35_TamWtbmtZFwdAKbrx06XijO_nznm4wNNM7iILYyDPHJ5CqOC_V7m7W9z5CX7MOIroLpxh0LGbA8eUIUVD-PO2RzsHkN752lk7Jde8SLdVc_xqsDQgWU7TJVbIWquN9KvrUZymozPkoebcaNpJnPBhyzl4U9EXlDJJVrD1pdmumBCm60k81al9qVeUdQxWFLSsWxL3Sjy7kdc1O52BFEF6-uthWDfTX-QgmpXe1orjbSBUDFnfKg')"></div>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex flex-col gap-1 px-2">
+                        <h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">The Last Frame</h3>
+                        <div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+                            <span>2026</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span>Sci-Fi</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3: Paper Skies -->
+                <div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+                    <div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2CBWXxn8BRNcu4V191tlfn_JP2VFFeNxNjqgIKl5aQFQ9QkfVNRQjFLJnmwhZiHOXdW1My-iOVffpCN2fGRAkVgh-WOf9NyZxkAGreWROVXQNjwrkzum2HfKUSyaW5SxjxwPINO1t-sEYWGUdzXYFI7s6Mm7Mqy7fofePqeVEoyYEA4aSn5ni5kV__EFDh6lBgSuxcnU6etZUGrESteD0bQxtnEXA1gDHIsnDFKmi7NiRofpxwHQbiQ')"></div>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex flex-col gap-1 px-2">
+                        <h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">Paper Skies</h3>
+                        <div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+                            <span>2024</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span>Fantasy</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4: September Rain -->
+                <div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+                    <div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzAvbJPLGJUuguhu4RQmGaCHBzP1fH88kvdpWBBCxNcBGd-lEAz2YtQ1CpTSMUYSvgj6Z9h0TjfEHY4hmyRGb4frovwto13b6jl9vg390SdRRdWFnrLebOgWPFA8s6w2xo6I090JnhVcNslzR_b8ayG6zaej70K1XsFpZ5UNWHk0d-Ma2NpN1SlLb5I8PC4yMR3JQueJcvrFpd70_h-et5uxiNHie3gsYNnU9gehh0k4OQ4IzlNr34Bw')"></div>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex flex-col gap-1 px-2">
+                        <h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">September Rain</h3>
+                        <div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+                            <span>2025</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span>Romance</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5: Echoes of Silence -->
+                <div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer pr-5 md:pr-10">
+                    <div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFFMTBS87il-IDouMOXI3qY2BJ-J57UeZ7poTIBWW3PWHpa9gq9XjVyrelvShcpN1QdxX-1nyiApvKxLFe5P_v7v9E1ME-xvf_gW9pIRAth3gxwDEAqBGmUM-B31MPLDd4gNhmkGSzeIi-KkSwx488uK6uesY58P1zYZTxp8WvbNn20mNLuVjFiYkHzr_p_wHR5ZLSqtpXcOGoqaBhxeopgV82drL_OCJEiWoQZSzoLdAG7_RyGsAvJA')"></div>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex flex-col gap-1 px-2">
+                        <h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">Echoes of Silence</h3>
+                        <div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+                            <span>2026</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span>Drama</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar (Mobile Only) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container/90 backdrop-blur-lg rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl p-2 hover:text-primary transition-all scale-90 duration-200 w-16" href="#">
+            <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+            <span class="font-label-caps text-[10px] mt-1 tracking-wider">Discover</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#">
+            <span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform">subscriptions</span>
+            <span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Library</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#">
+            <span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform">bookmark</span>
+            <span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Watchlist</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#" onclick="event.preventDefault(); window.App?.navigateTo('access')">
+            <span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform">private_connectivity</span>
+            <span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Room</span>
+        </a>
+    </nav>
+
+    <!-- Subtle gradient floor -->
+    <div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-[-1]"></div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗ -->
+<!-- ║  SCREEN 2: ACCESS — The Last Frame + Movie No. Input       ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════╝ -->
+<div id="screen-access" class="screen min-h-screen">
+
+    <!-- Desktop Navigation Drawer -->
+    <aside class="hidden md:flex flex-col h-full w-80 rounded-r-xl bg-surface-container-high shadow-xl fixed inset-y-0 left-0 z-[60] p-md transition-transform duration-300">
+        <div class="flex items-center gap-4 mb-xxl mt-lg">
+            <div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant shrink-0 border border-outline-variant">
+                <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVKYAlisai6MMm9TRxO7vksVyMyE_v07ec9tTOTsqG8vK06T-O6m9wdk8kM-A1dxd_LcbepSK2htMW4z_NsIT9-jxz1CekhY7xb4NOMBHtRc5bVhHwmMCoYTVrOucm2qloVK765HDfGva-0aqhbkFPU2o1G330gThMN9GVnGIxTmq0r9Xp5GGxuCtMXNQtaYs_e5HGwWjgb6-VWh-L0OaXXxJok1GgV0P27hKX0co3KPdzruVVd5gLaw">
+            </div>
+            <div class="flex flex-col">
+                <span class="font-headline-sm text-headline-sm text-on-surface">Cinephile One</span>
+                <span class="font-metadata text-metadata text-primary">Premium Member</span>
+            </div>
+        </div>
+        <nav class="flex-1 flex flex-col gap-sm">
+            <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors rounded-lg" href="#" onclick="event.preventDefault(); window.App?.navigateTo('home')">
+                <span class="material-symbols-outlined">home</span>
+                <span class="font-body-md text-body-md">Home</span>
+            </a>
+            <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors rounded-lg" href="#">
+                <span class="material-symbols-outlined">trending_up</span>
+                <span class="font-body-md text-body-md">Trending</span>
+            </a>
+            <a class="flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg opacity-100 scale-100 transition-all" href="#">
+                <span class="material-symbols-outlined fill">key</span>
+                <span class="font-body-md text-body-md font-bold">Secret Entry</span>
+            </a>
+        </nav>
+        <div class="mt-auto flex flex-col gap-sm pt-8 border-t border-surface-variant">
+            <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors rounded-lg" href="#">
+                <span class="material-symbols-outlined">person</span>
+                <span class="font-body-md text-body-md">Account Settings</span>
+            </a>
+            <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors rounded-lg" href="#">
+                <span class="material-symbols-outlined">help</span>
+                <span class="font-body-md text-body-md">Help</span>
+            </a>
+            <div class="px-4 py-2 mt-4">
+                <span class="font-metadata text-metadata text-outline">v2.4.0</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Top App Bar -->
+    <header class="md:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-xl">
+        <button class="text-on-surface-variant hover:text-primary transition-colors p-2 -ml-2" onclick="window.App?.navigateTo('home')">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="font-display-md text-display-md text-on-surface uppercase tracking-widest text-center">MM/MOVIES</h1>
+        <button class="text-on-surface-variant hover:text-primary transition-colors p-2 -mr-2">
+            <span class="material-symbols-outlined">search</span>
+        </button>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-1 w-full md:pl-80 pt-0 pb-24 md:pb-0 relative min-h-screen flex flex-col">
+        <div class="relative w-full h-[85vh] md:h-screen md:p-lg flex flex-col justify-end">
+            <!-- Cinematic Background Image -->
+            <div class="absolute inset-0 z-0 md:rounded-xl overflow-hidden md:m-lg">
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7HrvRO0QIIGCvQUlUWrvApp5etroXdDiLLrRQ0YYB7uaxAGW-w0wE8NtiD6PdQQkneTTXLNlWSquCmttU9LB1ZVzozY5UBcaWctBBI_qQEy81zJsWsgnjzDDQvYuRq_GzyP1wourBXIOqfs6q0lpPCdAppJgR5I9F_LI6Bqa3ocBDdOGHzEPBzFJzd6B-9lMpZ3O7PLh7dskkSlLKI2zl7S_rk2au1Slfe7RIIgCfl_8Vs4XwYCijHQ')"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-background/90 via-background/20 to-transparent"></div>
+            </div>
+            <!-- Content Area -->
+            <div class="relative z-10 w-full max-w-container-max mx-auto px-gutter md:px-xxl pb-xxl flex flex-col gap-6">
+                <div class="flex items-center gap-2 text-primary">
+                    <span class="material-symbols-outlined fill" style="font-size: 16px;">local_fire_department</span>
+                    <span class="font-label-caps text-label-caps uppercase tracking-widest">Tonight's Pick</span>
+                </div>
+                <div class="flex flex-col gap-2 max-w-2xl">
+                    <h2 class="font-display-lg text-display-lg md:text-[64px] md:leading-[1.1] text-on-surface font-semibold tracking-tight">The Last Frame</h2>
+                    <div class="flex flex-wrap items-center gap-3 font-metadata text-metadata text-on-surface-variant mt-2">
+                        <span>2026</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span>Mystery</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span>1h 54m</span>
+                        <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                        <span class="px-2 py-0.5 border border-outline-variant rounded text-[10px] uppercase tracking-wider">HDR</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant mt-4 max-w-xl opacity-80 leading-relaxed">
+                        A renowned photographer discovers a sequence of negatives that reveal a reality diverging from our own. As she investigates the locations, the boundaries between the captured images and the physical world begin to seamlessly dissolve.
+                    </p>
+                </div>
+
+                <!-- Secret Access Interaction -->
+                <div id="access-container" class="mt-8 flex flex-col md:flex-row items-start md:items-end gap-6 max-w-lg bg-surface-container-low/40 backdrop-blur-md p-6 rounded-xl border border-surface-variant/50 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div class="flex-1 w-full flex flex-col gap-2">
+                        <label class="font-metadata text-metadata text-on-surface-variant flex items-center gap-2" for="movie-no">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">vpn_key</span>
+                            Movie No.
+                        </label>
+                        <input autocomplete="off" class="w-full bg-transparent border-0 border-b border-outline-variant text-on-surface font-body-lg px-0 py-2 focus:ring-0 focus:border-primary transition-colors placeholder:text-on-surface-variant/30" id="movie-no" placeholder="Enter movie number" type="text">
+                        <!-- Error message (hidden by default) -->
+                        <p id="access-error" class="font-metadata text-metadata text-error mt-1 opacity-0 transition-opacity duration-300" style="min-height: 16px;"></p>
+                    </div>
+                    <button id="btn-play" class="shrink-0 w-full md:w-auto bg-inverse-surface text-on-secondary-fixed font-label-caps text-label-caps uppercase tracking-widest px-8 py-3.5 rounded-xl hover:bg-inverse-surface/90 transition-all glow-hover flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                        <span class="material-symbols-outlined fill" style="font-size: 18px;">play_arrow</span>
+                        <span id="btn-play-text">Play</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="h-24 md:h-0"></div>
+    </main>
+
+    <!-- Mobile Bottom Nav Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container/90 backdrop-blur-lg rounded-t-xl border-t-0">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2 w-16" href="#" onclick="event.preventDefault(); window.App?.navigateTo('home')">
+            <span class="material-symbols-outlined">movie_filter</span>
+            <span class="font-label-caps text-label-caps mt-1">Discover</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2 w-16" href="#">
+            <span class="material-symbols-outlined">subscriptions</span>
+            <span class="font-label-caps text-label-caps mt-1">Library</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2 w-16" href="#">
+            <span class="material-symbols-outlined">bookmark</span>
+            <span class="font-label-caps text-label-caps mt-1">Watchlist</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl p-2 scale-90 duration-200 w-16" href="#">
+            <span class="material-symbols-outlined fill">private_connectivity</span>
+            <span class="font-label-caps text-label-caps mt-1">Room</span>
+        </a>
+    </nav>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗ -->
+<!-- ║  SCREEN 3: PLAYBACK READY — Transition (from Stitch)       ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════╝ -->
+<div id="screen-playback" class="screen min-h-screen">
+    <div class="absolute inset-0 z-0 scale-110 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDasCRNLraOkYqobbfcGRDRuh3ZZYstEGVkJf4l5252-aiS064xKutRpvfvXQKrpRHNFf_YrG1F-nyNnC8PWW4zY_JKmtTdzy2ihK5jEu7GEMbHHyPVlwGNkktdtscWwYhRvzKLpQ_w_Ryp8oloRX0NeG60o9UYn10iNNIob4mMQe5BHW0N-0f4yX6gzTETJ-YtqttKLjTTsTPC6ocT5mP61Y3n8cbqqu7WOV-aV8TXS7i_gpDU6yzAog')">
+        <div class="absolute inset-0 backdrop-blur-3xl bg-surface/85"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+    </div>
+    <main class="relative z-10 flex flex-col items-center justify-center h-screen w-full px-gutter max-w-container-max mx-auto">
+        <!-- Cinematic Loading Animation -->
+        <div class="relative flex items-center justify-center mb-xxl reveal-content delay-1">
+            <div class="absolute w-40 h-40 rounded-full border border-surface-variant anim-ring-outer">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary/50"></div>
+            </div>
+            <div class="absolute w-32 h-32 rounded-full border border-dashed border-outline/30 anim-ring-inner"></div>
+            <div class="w-20 h-20 rounded-full bg-primary/10 border border-primary/40 backdrop-blur-sm flex items-center justify-center anim-core-glow relative z-20">
+                <span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            </div>
+        </div>
+        <!-- Text Content -->
+        <div class="text-center mb-xxl reveal-content delay-2">
+            <h1 class="font-display-lg text-display-lg text-on-surface mb-md tracking-tight">Playback Ready</h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
+                The connection is secure. Your screening of <span class="text-primary/90 italic">The Last Frame</span> is ready to begin.
+            </p>
+        </div>
+        <!-- Primary Action Button -->
+        <div class="reveal-content delay-3">
+            <button id="btn-continue-screening" class="bg-inverse-surface text-inverse-on-surface font-label-caps text-label-caps uppercase rounded-xl px-12 py-5 tracking-widest hover:scale-105 hover:bg-surface-tint hover:text-on-primary-fixed transition-all duration-300 shadow-[0_0_40px_rgba(242,202,80,0)] hover:shadow-[0_0_40px_rgba(242,202,80,0.2)] flex items-center gap-3 group">
+                Continue to Screening
+                <span class="material-symbols-outlined text-[16px] transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </button>
+        </div>
+    </main>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗ -->
+<!-- ║  SCREEN 4: ROOM — Private Communication (from Stitch)      ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════╝ -->
+<div id="screen-room" class="screen min-h-screen">
+
+    <!-- Task-Focused Header -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-gutter h-20 bg-background/80 backdrop-blur-xl border-b border-surface-variant/30 transition-all">
+        <button id="btn-leave-room" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">close</span>
+        </button>
+        <div class="flex flex-col items-center justify-center">
+            <h1 class="font-headline-sm-mobile md:font-headline-sm text-headline-sm-mobile md:text-headline-sm text-on-surface font-semibold tracking-tight">The Last Frame</h1>
+            <div id="room-status-indicator" class="flex items-center gap-1.5 mt-0.5">
+                <div class="relative flex h-2 w-2 items-center justify-center">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-40"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary shadow-[0_0_8px_rgba(242,202,80,0.8)]"></span>
+                </div>
+                <span id="room-status-text" class="font-metadata text-metadata text-primary uppercase tracking-wider">Connecting</span>
+            </div>
+        </div>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">more_horiz</span>
+        </button>
+    </header>
+
+    <!-- Connection Lost / Reconnecting Banner -->
+    <div id="reconnect-banner" class="fixed top-20 left-0 w-full z-40 bg-surface-container-high/90 backdrop-blur-md py-2 px-4 flex items-center justify-center gap-2 transition-all duration-300" style="display: none;">
+        <span class="material-symbols-outlined text-[16px] text-primary reconnect-pulse">wifi_off</span>
+        <span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Reconnecting...</span>
+    </div>
+
+    <!-- Communication Area Canvas -->
+    <main id="messages-container" class="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-gutter pt-28 pb-36 flex flex-col justify-end gap-4 overflow-y-auto" style="min-height: 100vh;">
+        <!-- Date Divider -->
+        <div class="flex justify-center w-full mb-4">
+            <span class="font-metadata text-metadata text-on-surface-variant/40 uppercase tracking-widest px-4 py-1 rounded-full border border-surface-variant/20 bg-surface/50 backdrop-blur-sm">Today</span>
+        </div>
+        <!-- Messages will be dynamically inserted here by app.js -->
+    </main>
+
+    <!-- Image Preview Bar (shown before sending an image) -->
+    <div id="image-preview-bar" class="image-preview-bar fixed bottom-[88px] md:bottom-[96px] left-0 w-full z-40 bg-surface-container/90 backdrop-blur-xl border-t border-surface-variant/20 p-3 items-center gap-3">
+        <div class="max-w-3xl mx-auto flex items-center gap-3">
+            <div class="relative w-16 h-16 rounded-xl overflow-hidden bg-surface-container-high flex-shrink-0">
+                <img id="preview-thumb" class="w-full h-full object-cover" src="" alt="Preview">
+            </div>
+            <div class="flex-1 flex flex-col gap-0.5">
+                <span id="preview-filename" class="font-metadata text-metadata text-on-surface truncate">image.jpg</span>
+                <span id="preview-filesize" class="font-metadata text-metadata text-on-surface-variant">0 KB</span>
+            </div>
+            <button id="btn-cancel-preview" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-error transition-colors">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Composer Area -->
+    <div class="fixed bottom-0 left-0 w-full z-50 bg-background/80 backdrop-blur-2xl border-t border-surface-variant/20 pb-safe pt-2">
+        <div class="max-w-3xl mx-auto w-full px-4 md:px-gutter py-2 md:py-4">
+            <div class="flex items-end gap-2 bg-surface-container/80 backdrop-blur-md rounded-[24px] p-1.5 pr-2 border border-surface-variant/30 shadow-lg focus-within:border-primary/40 focus-within:bg-surface-container transition-all duration-300">
+                <!-- Attachment Action -->
+                <button id="btn-attach" aria-label="Attach Image" class="p-3.5 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-variant/50 flex-shrink-0 self-end">
+                    <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'wght' 300;">add_photo_alternate</span>
+                </button>
+                <!-- Hidden file input -->
+                <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                <!-- Text Input -->
+                <textarea id="message-input" class="flex-1 bg-transparent border-none text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant/40 focus:ring-0 resize-none py-4 min-h-[52px] max-h-[140px]" placeholder="Write something..." rows="1"></textarea>
+                <!-- Send Action -->
+                <button id="btn-send" aria-label="Send Message" class="p-3.5 text-background bg-primary/90 hover:bg-primary rounded-full transition-all flex-shrink-0 self-end shadow-[0_0_15px_rgba(242,202,80,0.15)] hover:shadow-[0_0_20px_rgba(242,202,80,0.3)] group hover:scale-105 active:scale-95">
+                    <span class="material-symbols-outlined transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 text-[20px]" style="font-variation-settings: 'wght' 600, 'FILL' 1;">arrow_upward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗ -->
+<!-- ║  OVERLAYS — Toast Notifications, Lightbox, Room Full       ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════╝ -->
+
+<!-- Toast Container -->
+<div id="toast-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none"></div>
+
+<!-- Image Lightbox -->
+<div id="lightbox" class="lightbox" onclick="window.App?.closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full size preview">
+</div>
+
+<!-- Room Full Overlay -->
+<div id="room-full-overlay" class="fixed inset-0 z-[90] bg-background/95 backdrop-blur-xl flex items-center justify-center" style="display: none;">
+    <div class="text-center max-w-sm mx-auto px-8">
+        <div class="w-16 h-16 rounded-full bg-surface-container-high border border-surface-variant/50 flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-on-surface-variant text-[28px]">block</span>
+        </div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface mb-3">Room Currently Unavailable</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8">The screening room is at capacity. Please try again later.</p>
+        <button onclick="window.App?.navigateTo('home')" class="bg-surface-container-high text-on-surface font-label-caps text-label-caps uppercase tracking-widest px-8 py-3.5 rounded-xl hover:bg-surface-variant transition-all">
+            Return Home
+        </button>
+    </div>
+</div>
+
+
+<!-- ─── Application JavaScript ──────────────────────────────── -->
+<script src="/app.js"></script>
+
+</body>
+</html>

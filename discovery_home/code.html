@@ -1,0 +1,387 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Frame - Discover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#99907c",
+                      "tertiary-container": "#97b0ff",
+                      "primary": "#f2ca50",
+                      "surface-container-lowest": "#110e07",
+                      "on-surface": "#eae1d4",
+                      "on-secondary-fixed-variant": "#454745",
+                      "on-secondary-container": "#b8b9b5",
+                      "surface-dim": "#16130b",
+                      "inverse-surface": "#eae1d4",
+                      "on-tertiary": "#082b72",
+                      "background": "#16130b",
+                      "tertiary": "#bfcdff",
+                      "on-background": "#eae1d4",
+                      "error-container": "#93000a",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-container": "#254188",
+                      "surface-bright": "#3d392f",
+                      "on-error": "#690005",
+                      "inverse-on-surface": "#343027",
+                      "tertiary-fixed": "#dbe1ff",
+                      "outline-variant": "#4d4635",
+                      "on-secondary-fixed": "#1a1c1a",
+                      "primary-fixed": "#ffe088",
+                      "on-surface-variant": "#d0c5af",
+                      "tertiary-fixed-dim": "#b4c5ff",
+                      "surface-container-high": "#2d2a21",
+                      "on-primary-container": "#554300",
+                      "on-primary": "#3c2f00",
+                      "surface": "#16130b",
+                      "on-tertiary-fixed-variant": "#27438a",
+                      "inverse-primary": "#735c00",
+                      "secondary-fixed": "#e2e3df",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#e9c349",
+                      "surface-container": "#231f17",
+                      "primary-container": "#d4af37",
+                      "on-tertiary-fixed": "#00174b",
+                      "secondary-container": "#484947",
+                      "surface-variant": "#38342b",
+                      "secondary-fixed-dim": "#c6c7c3",
+                      "on-secondary": "#2f312e",
+                      "surface-container-highest": "#38342b",
+                      "on-primary-fixed-variant": "#574500",
+                      "surface-container-low": "#1f1b13",
+                      "surface-tint": "#e9c349",
+                      "on-primary-fixed": "#241a00",
+                      "secondary": "#c6c7c3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1440px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "unit": "4px",
+                      "xl": "40px",
+                      "xxl": "64px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "safe": "env(safe-area-inset-bottom, 24px)"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-md": [
+                              "Inter"
+                      ],
+                      "metadata": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-sm-mobile": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "metadata": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal lists */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Cinematic Card Gradient */
+        .card-gradient {
+            background: linear-gradient(to top, rgba(13, 14, 16, 0.9) 0%, rgba(13, 14, 16, 0.4) 50%, rgba(13, 14, 16, 0) 100%);
+        }
+        
+        /* Background base floor */
+        body {
+            background-color: #0D0E10; /* As requested in prompt/theme */
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md antialiased pb-24 md:pb-0 pt-16 md:pt-24 min-h-screen flex flex-col">
+<!-- TopAppBar (Web & Mobile Hybrid based on JSON and Instructions) -->
+<!-- JSON: fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 -->
+<!-- JSON: bg-surface dark:bg-surface / bg-surface/80 backdrop-blur-xl -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-xl">
+<!-- Leading Icon (Mobile only usually, but keeping per JSON structure) -->
+<button class="md:hidden text-primary dark:text-primary hover:text-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Brand Logo -->
+<!-- JSON: font-display-md text-display-md text-on-surface uppercase tracking-widest -->
+<div class="font-display-md text-display-md text-on-surface uppercase tracking-widest absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">mm/Movies</div>
+<!-- Desktop Navigation Links (Hidden on Mobile) -->
+<nav class="hidden md:flex gap-8 absolute left-1/2 -translate-x-1/2">
+<!-- Active State: Discover -->
+<a class="text-primary font-bold hover:text-primary transition-colors opacity-80 scale-95 transition-all relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#">Discover</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Watchlist</a>
+</nav>
+<!-- Trailing Icon -->
+<button class="text-primary dark:text-primary hover:text-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-5 md:px-10 lg:px-16 flex flex-col gap-xxl pb-xxl">
+<!-- Hero Section: Parallel Lines -->
+<section class="w-full pt-8 md:pt-12">
+<div class="relative w-full h-[65vh] md:h-[75vh] min-h-[500px] rounded-[24px] overflow-hidden group">
+<!-- Hero Background Image -->
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="A cinematic, wide-angle shot of two distant figures standing on desolate, parallel train tracks stretching into a moody, foggy horizon. The aesthetic is highly atmospheric, neo-noir, utilizing deep charcoal blacks, misty grays, and stark, warm amber practical lights piercing through the fog. The composition is symmetrical and minimalist, evoking a sense of isolation and high-stakes drama." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAi3PSXWTpIG1Y95evv66V4ZFCnZct7FE4cnMT9dZRtrmUSkD4Sn5FeAsSy7ZQL2Ea-7AMKfAZjF283aoG4o65z1sShu5V1LAfIpOu0gIGkX9O8HOsU-mG6-HgERhYdFqgSPnE3Wf-Gxct-8T-WM90oAnmsRkmxdQ9BOL8ERmxEfP3Ogad6FgLTqsYE1oBAZ6ZeLMD3fjcOTJtSVf8xBMqubxjdrJiNzi9Lir8xrnoopEgVRyxr9FJaeA')"></div>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 card-gradient"></div>
+<!-- Hero Content -->
+<div class="absolute bottom-0 left-0 w-full p-6 md:p-12 flex flex-col gap-md z-10">
+<div class="flex items-center gap-sm">
+<!-- Chips / Tags -->
+<span class="px-3 py-1 bg-surface-variant/40 backdrop-blur-md rounded-full font-label-caps text-label-caps text-on-surface uppercase tracking-wider">Featured Premiere</span>
+</div>
+<h1 class="font-display-lg text-display-lg md:text-[64px] text-on-background drop-shadow-lg max-w-3xl leading-tight">Parallel Lines</h1>
+<div class="flex items-center gap-3 font-metadata text-metadata text-on-surface-variant uppercase tracking-widest">
+<span class="">2026</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Drama</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">2h 08m</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface/90 max-w-2xl mt-2 line-clamp-3 md:line-clamp-none">
+                        When a fragmented memory surfaces, an aging detective and a disillusioned journalist find their lives intersecting across two distinct timelines. A visually arresting exploration of fate, choice, and the echoes of the past.
+                    </p>
+<div class="flex flex-wrap items-center gap-4 mt-6">
+<!-- Primary Button -->
+<button class="bg-[#F5F5F1] text-surface-lowest px-8 py-4 rounded-[12px] font-label-caps text-label-caps uppercase tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            View Details
+                        </button>
+<!-- Secondary Button -->
+<button class="bg-transparent border border-[#8E8E93] text-on-surface px-8 py-4 rounded-[12px] font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant/30 transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="bookmark_add">bookmark_add</span>
+                            Save
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Picks Shelf -->
+<section class="w-full flex flex-col gap-6">
+<div class="flex justify-between items-end px-2">
+<h2 class="font-headline-sm text-headline-sm md:text-[28px] text-on-background tracking-tight">Trending Picks</h2>
+<div class="flex gap-2">
+<button aria-label="Previous" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<button aria-label="Next" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Container -->
+<!-- Note: Negative margins used to allow bleed on mobile, padding added back to align with content -->
+<div class="flex gap-6 overflow-x-auto hide-scroll pb-8 pt-2 -mx-5 px-5 md:-mx-10 md:px-10 lg:-mx-16 lg:px-16 snap-x snap-mandatory">
+<!-- Card 1: After Midnight -->
+<div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" data-alt="A moody, high-contrast cinematic poster still for a movie titled 'After Midnight'. The scene depicts a rain-slicked neon city street corner at exactly 12:01 AM. A solitary figure stands under a flickering amber streetlight, casting a long, stark shadow. The color palette is dominated by deep charcoal blacks, desaturated cyans, and piercing golden-yellow highlights. Minimalist, premium thriller aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBU20DOsTQjp3EEtGdyOZf12eT2Aac7nH2DRCv_6a6WFE9DqHc2jrW1SZECLqTU8Hud7Kc8LHPKShH1RKP7OTWnGiQPRFfygG4OrbFoi6sQUTfrJ0mZtrVbPYQ4a_MabhfHdB8EhWMIFEPvCHOmdVbhXKHa3XGV4EmCZ-vwkF7z2XNr-yf-Qd5qR4cLUk-mvCmf7DDHBtSHHqnmd2MZaf_w7y5iR3lyQwuii_2mCa76biH6qS1hT_l7Rw')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+</div>
+<div class="flex flex-col gap-1 px-2">
+<h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">After Midnight</h3>
+<div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+<span class="">2025</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Thriller</span>
+</div>
+</div>
+</div>
+<!-- Card 2: The Last Frame -->
+<div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" data-alt="An abstract, highly aesthetic cinematic poster still for a movie titled 'The Last Frame'. The image shows a close-up of a vintage camera lens reflecting a sprawling, futuristic metropolis ablaze in sunset oranges and deep purples. The surrounding camera body is pure matte black, providing heavy negative space. The lighting is soft and melancholic, evoking a premium sci-fi drama vibe." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDG35_TamWtbmtZFwdAKbrx06XijO_nznm4wNNM7iILYyDPHJ5CqOC_V7m7W9z5CX7MOIroLpxh0LGbA8eUIUVD-PO2RzsHkN752lk7Jde8SLdVc_xqsDQgWU7TJVbIWquN9KvrUZymozPkoebcaNpJnPBhyzl4U9EXlDJJVrD1pdmumBCm60k81al9qVeUdQxWFLSsWxL3Sjy7kdc1O52BFEF6-uthWDfTX-QgmpXe1orjbSBUDFnfKg')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+</div>
+<div class="flex flex-col gap-1 px-2">
+<h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">The Last Frame</h3>
+<div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+<span class="">2026</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Sci-Fi</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Paper Skies -->
+<div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" data-alt="A whimsical yet sophisticated cinematic poster still for a movie titled 'Paper Skies'. The visual features an impossibly vast, pale sky entirely made of folded origami clouds in varying shades of white and soft gray. A single, tiny, brilliantly golden paper airplane cuts a sharp trajectory across the composition. Minimalist, surrealist design with extensive negative space and soft, diffused studio lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2CBWXxn8BRNcu4V191tlfn_JP2VFFeNxNjqgIKl5aQFQ9QkfVNRQjFLJnmwhZiHOXdW1My-iOVffpCN2fGRAkVgh-WOf9NyZxkAGreWROVXQNjwrkzum2HfKUSyaW5SxjxwPINO1t-sEYWGUdzXYFI7s6Mm7Mqy7fofePqeVEoyYEA4aSn5ni5kV__EFDh6lBgSuxcnU6etZUGrESteD0bQxtnEXA1gDHIsnDFKmi7NiRofpxwHQbiQ')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+</div>
+<div class="flex flex-col gap-1 px-2">
+<h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">Paper Skies</h3>
+<div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+<span class="">2024</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Fantasy</span>
+</div>
+</div>
+</div>
+<!-- Card 4: September Rain -->
+<div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" data-alt="An intimate, deeply emotional cinematic poster still for a movie titled 'September Rain'. The shot is a tight close-up of a rain-streaked window pane, obscuring a softly out-of-focus interior lit by warm, golden hour light. A single, distinct tear-like raindrop traces a path down the glass. The color grading is extremely cinematic, leaning into deep umbers, muted blacks, and warm ambers. Indie romance aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzAvbJPLGJUuguhu4RQmGaCHBzP1fH88kvdpWBBCxNcBGd-lEAz2YtQ1CpTSMUYSvgj6Z9h0TjfEHY4hmyRGb4frovwto13b6jl9vg390SdRRdWFnrLebOgWPFA8s6w2xo6I090JnhVcNslzR_b8ayG6zaej70K1XsFpZ5UNWHk0d-Ma2NpN1SlLb5I8PC4yMR3JQueJcvrFpd70_h-et5uxiNHie3gsYNnU9gehh0k4OQ4IzlNr34Bw')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+</div>
+<div class="flex flex-col gap-1 px-2">
+<h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">September Rain</h3>
+<div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+<span class="">2025</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Romance</span>
+</div>
+</div>
+</div>
+<!-- Card 5: Echoes of Silence -->
+<div class="snap-start shrink-0 w-[240px] md:w-[280px] group cursor-pointer pr-5 md:pr-10">
+<div class="relative w-full aspect-[2/3] rounded-[24px] overflow-hidden mb-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110" data-alt="A stark, minimalist cinematic poster still for a movie titled 'Echoes of Silence'. The image presents an immense, brutalist concrete structure set against a pitch-black void. A single, tiny sliver of warm, intense golden light spills from a narrow crack in the monolithic wall, suggesting a hidden world beyond. The aesthetic is heavy, oppressive yet alluring, utilizing sharp geometric lines and deep charcoal tones. High-end psychological drama." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFFMTBS87il-IDouMOXI3qY2BJ-J57UeZ7poTIBWW3PWHpa9gq9XjVyrelvShcpN1QdxX-1nyiApvKxLFe5P_v7v9E1ME-xvf_gW9pIRAth3gxwDEAqBGmUM-B31MPLDd4gNhmkGSzeIi-KkSwx488uK6uesY58P1zYZTxp8WvbNn20mNLuVjFiYkHzr_p_wHR5ZLSqtpXcOGoqaBhxeopgV82drL_OCJEiWoQZSzoLdAG7_RyGsAvJA')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+</div>
+<div class="flex flex-col gap-1 px-2">
+<h3 class="font-headline-sm text-headline-sm-mobile md:text-[20px] text-on-background group-hover:text-primary transition-colors truncate">Echoes of Silence</h3>
+<div class="flex items-center gap-2 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">
+<span class="">2026</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="">Drama</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<!-- JSON: fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe -->
+<!-- JSON: bg-surface-container dark:bg-surface-container rounded-t-xl bg-surface-container/90 backdrop-blur-lg -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container/90 backdrop-blur-lg rounded-t-xl flat no shadows">
+<!-- Active: Discover -->
+<a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl p-2 hover:text-primary transition-all scale-90 duration-200 w-16" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="movie_filter" data-weight="fill" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+<span class="font-label-caps text-[10px] mt-1 tracking-wider">Discover</span>
+</a>
+<!-- Inactive: Library -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform" data-icon="subscriptions">subscriptions</span>
+<span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Library</span>
+</a>
+<!-- Inactive: Watchlist -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform" data-icon="bookmark">bookmark</span>
+<span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Watchlist</span>
+</a>
+<!-- Inactive: Room -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all w-16 group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-1 transition-transform" data-icon="private_connectivity">private_connectivity</span>
+<span class="font-label-caps text-[10px] mt-1 tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">Room</span>
+</a>
+</nav>
+<!-- Subtle gradient floor overlay to ensure deep blacks at the bottom -->
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-[-1]"></div>
+
+
+</body></html>
